@@ -24,9 +24,9 @@ public class UserService {
         }
     }
     public User createUser(User user) {
-        Optional<User> userOptional = userRepository.findByUserName(user.getUsername());
+        Optional<User> userOptional = userRepository.findByUserName(user.getUserName());
         if (userOptional.isPresent()) {
-            throw new UserAlreadyExistsExeption("User already exists with name: " + user.getUsername());
+            throw new UserAlreadyExistsExeption("User already exists with name: " + user.getUserName());
         }
         return userRepository.save(user);
     }
@@ -34,7 +34,7 @@ public class UserService {
 
     public void updateUser(Integer id, User user) {
         User oldUser = getUserById(id);
-        oldUser.setUsername(user.getUsername());
+        oldUser.setUserName(user.getUserName());
         userRepository.save(oldUser);
     }
     public User getUserById(Integer id) {

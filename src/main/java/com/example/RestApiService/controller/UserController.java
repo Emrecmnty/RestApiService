@@ -5,6 +5,7 @@ import com.example.RestApiService.Exeption.UserNotFoundExeption;
 import com.example.RestApiService.model.User;
 import com.example.RestApiService.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +14,8 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/users")
-@AllArgsConstructor
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
