@@ -5,6 +5,7 @@ import com.example.RestApiService.Exeption.UserNotFoundExeption;
 import com.example.RestApiService.model.User;
 import com.example.RestApiService.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,28 +17,31 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public List<User> getAllUsers(String username) {
+    public List<User> getAllUsers(final String username) {
         if (username == null) {
             return userRepository.findAll();
         } else {
             return userRepository.findAllByUserName(username);
         }
     }
-    public User createUser(User user) {
-        Optional<User> userOptional = userRepository.findByUserName(user.getUserName());
+    public User createUser(final User user) {
+        final Optional<User> userOptional = userRepository.findByUserName(user.getUserName());
         if (userOptional.isPresent()) {
             throw new UserAlreadyExistsExeption("User already exists with name: " + user.getUserName());
         }
         return userRepository.save(user);
     }
-    public void deleteUser(Integer id) {userRepository.deleteById(id);}
-
-    public void updateUser(Integer id, User user) {
-        User oldUser = getUserById(id);
-        oldUser.setUserName(user.getUserName());
-        userRepository.save(oldUser);
+    public ResponseEntity deleteUser(final Integer id) {
+        userRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
-    public User getUserById(Integer id) {
+
+    public User updateUser(final Integer id,final User user) {
+      final User oldUser = getUserById(id);
+        oldUser.setUserName(user.getUserName());
+        return userRepository.save(oldUser);
+    }
+    public User getUserById(final Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundExeption("User not found with id: " + id));
     }
