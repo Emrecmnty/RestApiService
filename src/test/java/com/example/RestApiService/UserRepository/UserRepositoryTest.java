@@ -5,7 +5,6 @@ import com.example.RestApiService.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -27,6 +26,7 @@ public class UserRepositoryTest {
     }
     @Test
     void findByUserName(){
+
         Optional<User> responseEntity = userRepository.findByUserName("JohnDoe");
         assertThat(responseEntity.isPresent()).isTrue();
         assertThat(responseEntity.get().getUserName()).isEqualTo("JohnDoe");
